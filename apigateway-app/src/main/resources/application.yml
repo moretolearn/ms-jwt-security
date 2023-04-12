@@ -1,0 +1,33 @@
+spring:
+ cloud:
+   gateway:
+     routes:
+       - id: hoy-app
+         uri: lb://HOY-APP
+         predicates:
+           - Path=/hoy/**
+         filters:
+           - AuthenticationFilter
+
+       - id: cab-app
+         uri: lb://CAB-APP
+         predicates:
+           - Path=/cab/**
+         filters:
+           - AuthenticationFilter
+
+       - id: auth-app
+         uri: lb://AUTH-APP
+         predicates:
+           - Path=/auth/**
+
+ application:
+   name: APIGATEWAY-APP
+
+server:
+  port: 9899   
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
